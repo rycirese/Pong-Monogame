@@ -1,11 +1,16 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong", "Pong.csproj", "{F39DDEF3-2FDD-4E69-8131-76CB73566783}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Thomas", "Thomas\Thomas.shproj", "{85673F3B-7329-40F2-A002-CC80818F849D}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Thomas\Thomas.projitems*{85673f3b-7329-40f2-a002-cc80818f849d}*SharedItemsImports = 13
+		Thomas\Thomas.projitems*{f39ddef3-2fdd-4e69-8131-76cb73566783}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
@@ -15,5 +20,8 @@ Global
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Debug|x86.Build.0 = Debug|x86
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Release|x86.ActiveCfg = Release|x86
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
