@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong", "Pong\Pong.csproj", "{0632FCC6-A6BD-4026-A0D5-98FE932A2D6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thomas", "..\Thomas\Thomas.csproj", "{8222C8CC-FB6F-42C7-82B5-AF7999057AAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0632FCC6-A6BD-4026-A0D5-98FE932A2D6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0632FCC6-A6BD-4026-A0D5-98FE932A2D6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0632FCC6-A6BD-4026-A0D5-98FE932A2D6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0632FCC6-A6BD-4026-A0D5-98FE932A2D6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8222C8CC-FB6F-42C7-82B5-AF7999057AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8222C8CC-FB6F-42C7-82B5-AF7999057AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8222C8CC-FB6F-42C7-82B5-AF7999057AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8222C8CC-FB6F-42C7-82B5-AF7999057AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
