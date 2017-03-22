@@ -124,7 +124,7 @@
     <Content Include="Content\Sprites\paddle.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Thomas\Thomas.csproj">
+    <ProjectReference Include="..\Thomas\Thomas.csproj">
       <Project>{8222c8cc-fb6f-42c7-82b5-af7999057aaa}</Project>
       <Name>Thomas</Name>
     </ProjectReference>
