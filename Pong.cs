@@ -3,9 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 
 using Thomas;
 
@@ -16,17 +14,23 @@ namespace Pong
 	/// </summary>
 	public class Pong : Engine
 	{
-
-		private Engine engine;
+		Engine engine;
 
 		public Pong() : base(Strings.Title, 640, 360, false, false)
 		{
 			engine = this;
+		}
 
-			Entity test = new Entity();
-			test.AddComponent(new Component());
+		protected override void LoadContent()
+		{
+			Entity centerLine = new Entity("centerLine");
+			centerLine.AddComponent(new DrawComponent(centerLine, "Sprites/center"));
+			PositionComponent positionComponent = new PositionComponent(centerLine);
 
-			engine.AddEntity(test);
+			positionComponent.position.X = ((Width -  ((DrawComponent)centerLine.GetComponent("DrawComponent")).getTextureWidth()) / 2);
+			positionComponent.position.Y = 8f;
+			centerLine.AddComponent(positionComponent);
+			engine.AddEntity(centerLine);
 		}
 
 		protected override void Update(GameTime gameTime)

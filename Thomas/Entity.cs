@@ -8,12 +8,16 @@ namespace Thomas
 {
     public class Entity
     {
-        private List<Component> components;
+		public string ID;
 
-        public Entity()
+        List<Component> components;
+
+		public Entity(string ID)
         {
+			this.ID = ID;
             components = new List<Component>();
         }
+
 
         public void Update(GameTime gameTime)
         {
@@ -42,7 +46,7 @@ namespace Thomas
             if (!components.Contains(component))
             {
                 components.Add(component);
-                Debug.WriteLine("Component has been added");
+				Debug.WriteLine(component.ID + " has been added");
             }
         }
 
@@ -54,5 +58,18 @@ namespace Thomas
                 Debug.WriteLine("Component has been removed");
             }
         }
+
+		public Component GetComponent(string id)
+		{
+			if (components != null)
+			{
+				foreach (var c in components)
+				{
+					if (c.ID.Equals(id)) return c;
+				}
+			}
+
+			return null;
+		}
     }
 }

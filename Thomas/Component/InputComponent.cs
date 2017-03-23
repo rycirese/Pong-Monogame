@@ -2,16 +2,17 @@
 
 namespace Thomas
 {
-    class StaticComponent : Component
+    class InputComponent : Component
     {
-        public StaticComponent() : base()
+		public InputComponent(Entity entity) : base("InputComponent")
         {
-
+			this.entity = entity;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
         }
+
     }
 }

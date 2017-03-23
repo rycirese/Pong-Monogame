@@ -47,6 +47,12 @@
   <ItemGroup>
     <None Include="app.manifest" />
     <None Include="Icon.png" />
+    <None Include="Content\Sprites\ball.jpg" />
+    <None Include="Content\Sprites\center.jpeg" />
+    <None Include="Content\Sprites\paddle.jpg" />
+    <None Include="Content\Sounds\ball_paddle.wav" />
+    <None Include="Content\Sounds\ball_wall.wav" />
+    <None Include="Content\Sounds\score.wav" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />

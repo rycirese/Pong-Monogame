@@ -6,11 +6,15 @@ namespace Thomas
 {
     public class Component
     {
-        public virtual void LoadContent(ContentManager Content, string spriteName)
-        {
-            Content = new ContentManager(Content.ServiceProvider);
-            Content.RootDirectory = "Content";
-        }
+		public Entity entity;
+		public string ID { get; }
+
+		public Component(string ID)
+		{
+			this.ID = ID;
+		}
+
+		public virtual void LoadContent() { }
         public virtual void Update(GameTime gameTime) { }
         public virtual void Draw(SpriteBatch spriteBatch) { }
     }

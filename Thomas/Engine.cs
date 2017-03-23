@@ -8,37 +8,34 @@ namespace Thomas
 {
     public class Engine : Game
     {
-        static public Engine instance { get; private set; }
-        static public GraphicsDeviceManager graphics { get; private set; }
-        static public int width { get; private set; }
-        static public int height { get; private set; }
-        public string title;
+		static public Engine instance;
+		static public GraphicsDeviceManager graphics;
+		public int Width;
+        public int Height { get; private set; }
+        public string Title;
 
-        private List<Entity> entities;
+        List<Entity> entities;
 
-        Texture2D texture;
-        Vector2 position;
-
-        public Engine(string title, int w, int h, bool fullscreen, bool borderless)
+        public Engine(string title, int width, int height, bool fullscreen, bool borderless)
         {
             instance = this;
             graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
 
-            this.title = title;
-            this.Window.Title = this.title;
+            Title = title;
+            Window.Title = Title;
 
-            width = w;
-            height = h;
+            Width = width;
+            Height = height;
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
 
             if (fullscreen) graphics.IsFullScreen = true;
             else graphics.IsFullScreen = false;
 
-            if (borderless) this.Window.IsBorderless = true;
-            else this.Window.IsBorderless = false;
+            if (borderless) Window.IsBorderless = true;
+            else Window.IsBorderless = false;
 
             Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width);
             Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
@@ -54,8 +51,9 @@ namespace Thomas
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            Thomas.Draw.Initialize(GraphicsDevice);
+			// TODO: Add your initialization logic here
+			ContentManagerUtil.Initialize(Content);
+			DrawUtil.Initialize(GraphicsDevice);
 
             base.Initialize();
         }
@@ -66,9 +64,6 @@ namespace Thomas
         /// </summary>
         protected override void LoadContent()
         {
-            texture = Content.Load<Texture2D>("Sprites/center");
-            position = new Vector2((width / 2) - (texture.Width / 2), 6);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -108,18 +103,17 @@ namespace Thomas
             base.Draw(gameTime);
             GraphicsDevice.Clear(Color.Black);
 
-            Thomas.Draw.spriteBatch.Begin();
-            Thomas.Draw.spriteBatch.Draw(texture, position, new Rectangle(0, 0, texture.Width / 3, texture.Height), Color.White);
+			DrawUtil.SpriteBatch.Begin();
 
             if (entities != null)
             {
                 foreach (var e in entities)
                 {
-                    e.Draw(Thomas.Draw.spriteBatch);
+                    e.Draw(DrawUtil.SpriteBatch);
                 }
             }
 
-            Thomas.Draw.spriteBatch.End();
+			DrawUtil.SpriteBatch.End();
         }
 
         public void AddEntity(Entity entity) 
@@ -139,5 +133,18 @@ namespace Thomas
                 Debug.WriteLine("Entity has been removed");
             }
         }
+
+		public Entity GetEntity(string id)
+		{
+			if (entities != null)
+			{
+				foreach (var e in entities)
+				{
+					if (e.ID.Equals(id)) return e;
+				}
+			}
+
+			return null;
+		}
     }
 }

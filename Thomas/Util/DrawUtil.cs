@@ -4,16 +4,16 @@ using System;
 
 namespace Thomas
 {
-    public static class Draw
+    public static class DrawUtil
     {
         /// <summary>
         /// All 2D rendering is done through this SpriteBatch instance
         /// </summary>
-        static public SpriteBatch spriteBatch { get; private set; }
+        static public SpriteBatch SpriteBatch { get; private set; }
 
         static internal void Initialize(GraphicsDevice graphicsDevice)
         {
-            spriteBatch = new SpriteBatch(graphicsDevice);
+            SpriteBatch = new SpriteBatch(graphicsDevice);
         }
     }
 }
