@@ -28,6 +28,9 @@ tarballs/
 test-results/
 Thumbs.db
 
+# Windows stuff
+.vs/
+
 # Mac bundle stuff
 *.dmg
 *.app
