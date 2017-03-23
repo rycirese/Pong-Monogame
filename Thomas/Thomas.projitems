@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -12,10 +12,11 @@
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Component\" />
     <Folder Include="$(MSBuildThisFileDirectory)Util\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Component\ControlComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\StaticComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\Component.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\Draw.cs" />
