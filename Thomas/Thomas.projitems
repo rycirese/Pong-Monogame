@@ -20,5 +20,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Component\Component.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\Draw.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\DrawableComponent.cs" />
   </ItemGroup>
 </Project>
