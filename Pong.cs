@@ -24,12 +24,14 @@ namespace Pong
 		protected override void LoadContent()
 		{
 			Entity centerLine = new Entity("centerLine");
-			centerLine.AddComponent(new DrawComponent(centerLine, "Sprites/center"));
-			PositionComponent positionComponent = new PositionComponent(centerLine);
 
+			centerLine.AddComponent(new DrawComponent(centerLine, "Sprites/center", 0.0f, null, 0.0f));
+
+			PositionComponent positionComponent = new PositionComponent(centerLine);
 			positionComponent.position.X = ((Width -  ((DrawComponent)centerLine.GetComponent("DrawComponent")).getTextureWidth()) / 2);
-			positionComponent.position.Y = 8f;
+			positionComponent.position.Y = 7f;
 			centerLine.AddComponent(positionComponent);
+            
 			engine.AddEntity(centerLine);
 		}
 

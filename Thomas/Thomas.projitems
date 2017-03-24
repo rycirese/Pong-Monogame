@@ -12,16 +12,17 @@
     <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Util\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Component\InputComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\Component.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Util\DrawLayer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\DrawUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\DrawComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\ContentManagerUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\PositionComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Graphics\" />
   </ItemGroup>
 </Project>

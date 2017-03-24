@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Thomas
 {
@@ -12,6 +13,8 @@ namespace Thomas
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+
         }
 
     }

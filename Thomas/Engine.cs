@@ -102,8 +102,8 @@ namespace Thomas
         {
             base.Draw(gameTime);
             GraphicsDevice.Clear(Color.Black);
-
-			DrawUtil.SpriteBatch.Begin();
+            
+			DrawUtil.SpriteBatch.Begin(SpriteSortMode.BackToFront);
 
             if (entities != null)
             {
