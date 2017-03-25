@@ -43,7 +43,6 @@
     <Compile Include="Content\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Actor\PlayerPaddle.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
@@ -99,9 +98,6 @@
     <Content Include="libSDL2-2.0.0.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Actor\" />
   </ItemGroup>
   <Import Project="Thomas\Thomas.projitems" Label="Shared" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

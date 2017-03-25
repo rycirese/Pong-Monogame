@@ -15,6 +15,7 @@ namespace Pong
 	public class Pong : Engine
 	{
 		Engine engine;
+
 		Entity player1;
 		Entity player2;
 
