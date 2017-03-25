@@ -9,13 +9,14 @@ namespace Thomas
     public class Entity
     {
 		public string ID;
-
         List<Component> components;
+		private bool drawable;
 
 		public Entity(string ID)
         {
 			this.ID = ID;
             components = new List<Component>();
+			drawable = false;
         }
 
 
@@ -46,6 +47,7 @@ namespace Thomas
             if (!components.Contains(component))
             {
                 components.Add(component);
+				if (component.ID == "DrawableComponent") drawable = true;
 				Debug.WriteLine(component.ID + " has been added");
             }
         }
@@ -70,6 +72,26 @@ namespace Thomas
 			}
 
 			return null;
+		}
+
+		public int GetWidth()
+		{
+			if (drawable)
+			{
+				return ((DrawComponent)GetComponent("DrawComponent")).GetTextureWidth();
+			}
+
+			return 0;
+		}
+
+		public int GetHeight()
+		{
+			if (drawable)
+			{
+				return ((DrawComponent)GetComponent("DrawComponent")).GetTextureHeight();
+			}
+
+			return 0;
 		}
     }
 }
