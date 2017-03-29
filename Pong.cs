@@ -31,8 +31,8 @@ namespace Pong
 			player1 = new Entity("Player1");
 			DrawComponent player1DC = new DrawComponent(player1, "Sprites/paddle", Color.White, 0.0f, null, DrawLayer.Player());
 			PositionComponent player1PC = new PositionComponent(player1);
-			player1PC.position.X = engine.Width - (player1DC.GetTextureWidth() + 20f);
-			player1PC.position.Y = (engine.Height / 2f) - (player1DC.GetTextureHeight() / 2f);
+			player1PC.position.X = player1PC.origin.X = engine.Width - (player1DC.GetTextureWidth() + 20f);
+			player1PC.position.Y = player1PC.origin.Y = (engine.Height / 2f) - (player1DC.GetTextureHeight() / 2f);
 			player1.AddComponent(player1DC);
 			player1.AddComponent(player1PC);
 			engine.AddEntity(player1);
@@ -40,8 +40,8 @@ namespace Pong
 			player2 = new Entity("Player2");
 			DrawComponent player2DC = new DrawComponent(player2, "Sprites/paddle", Color.White, 0.0f, null, DrawLayer.Player());
 			PositionComponent player2PC = new PositionComponent(player2);
-			player2PC.position.X = 20f;
-			player2PC.position.Y = (engine.Height / 2f) - (player2DC.GetTextureHeight() / 2f);
+			player2PC.position.X = player2PC.origin.X = 20f;
+			player2PC.position.Y = player2PC.origin.Y = (engine.Height / 2f) - (player2DC.GetTextureHeight() / 2f);
 			player2.AddComponent(player2DC);
 			player2.AddComponent(player2PC);
 			engine.AddEntity(player2);
@@ -56,37 +56,31 @@ namespace Pong
 			engine.AddEntity(centerLine);
 		}
 
-		protected override void LoadContent()
-		{
-			
-		}
-
 		protected override void Update(GameTime gameTime)
 		{
-
-			float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
 
 			// PLAYER1 CONTROL
 			if (Keyboard.GetState().IsKeyDown(Keys.Up))
 			{
-				((PositionComponent)player1.GetComponent("PositionComponent")).position.Y -= (delta * 200f);
+                player1.Get<PositionComponent>().position.Y -= (deltaTime * 200f);
 			}
 			if (Keyboard.GetState().IsKeyDown(Keys.Down))
 			{
-				((PositionComponent)player1.GetComponent("PositionComponent")).position.Y += (delta * 200f);
-			}
+                player1.Get<PositionComponent>().position.Y += (deltaTime * 200f);
+            }
 
 			// PLAYER2 CONTROL
 			if (Keyboard.GetState().IsKeyDown(Keys.W))
 			{
-				((PositionComponent)player2.GetComponent("PositionComponent")).position.Y -= (delta * 200f);
-			}
+                player2.Get<PositionComponent>().position.Y -= (deltaTime * 200f);
+            }
 			if (Keyboard.GetState().IsKeyDown(Keys.S))
 			{
-				((PositionComponent)player2.GetComponent("PositionComponent")).position.Y += (delta * 200f);
-			}
+                player2.Get<PositionComponent>().position.Y += (deltaTime * 200f);
+            }
 		}
 
 	}

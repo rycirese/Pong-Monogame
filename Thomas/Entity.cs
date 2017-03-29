@@ -10,7 +10,8 @@ namespace Thomas
     {
 		public string ID;
         List<Component> components;
-		private bool drawable;
+
+		public bool drawable;
 
 		public Entity(string ID)
         {
@@ -47,8 +48,7 @@ namespace Thomas
             if (!components.Contains(component))
             {
                 components.Add(component);
-				if (component.ID == "DrawableComponent") drawable = true;
-				Debug.WriteLine(component.ID + " has been added");
+				if (component.GetType() == typeof(DrawComponent)) drawable = true;
             }
         }
 
@@ -57,28 +57,22 @@ namespace Thomas
             if (components.Contains(component))
             {
                 components.Remove(component);
-                Debug.WriteLine("Component has been removed");
             }
         }
 
-		public Component GetComponent(string id)
-		{
-			if (components != null)
-			{
-				foreach (var c in components)
-				{
-					if (c.ID.Equals(id)) return c;
-				}
-			}
-
-			return null;
-		}
+        public T Get<T>() where T : Component
+        {
+            foreach (var c in components)
+                if (c is T)
+                    return c as T;
+            return null;
+        }
 
 		public int GetWidth()
 		{
 			if (drawable)
 			{
-				return ((DrawComponent)GetComponent("DrawComponent")).GetTextureWidth();
+				return Get<DrawComponent>().GetTextureWidth();
 			}
 
 			return 0;
@@ -88,7 +82,7 @@ namespace Thomas
 		{
 			if (drawable)
 			{
-				return ((DrawComponent)GetComponent("DrawComponent")).GetTextureHeight();
+				return Get<DrawComponent>().GetTextureHeight();
 			}
 
 			return 0;

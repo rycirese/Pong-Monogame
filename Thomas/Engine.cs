@@ -109,7 +109,10 @@ namespace Thomas
             {
                 foreach (var e in entities)
                 {
-                    e.Draw(DrawUtil.SpriteBatch);
+                    if (e.drawable)
+                    {
+                        e.Draw(DrawUtil.SpriteBatch);
+                    }
                 }
             }
 
@@ -121,7 +124,6 @@ namespace Thomas
             if (!entities.Contains(entity))
             {
                 entities.Add(entity);
-                Debug.WriteLine("Entity has been added");
             }
         }
 
@@ -130,7 +132,6 @@ namespace Thomas
             if (entities.Contains(entity))
             {
                 entities.Remove(entity);
-                Debug.WriteLine("Entity has been removed");
             }
         }
 
