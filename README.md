@@ -1,5 +1,6 @@
 ﻿# Pong 
 * Pong Clone - (Windows, Mac, Linux (Untested))
+* Developed using Monogame
 * 2 Player 
 * Controls
 	* Player 1 Controls - Up, Down
