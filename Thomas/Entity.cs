@@ -10,6 +10,7 @@ namespace Thomas
     {
 		public string ID;
         List<Component> components;
+        public Collider collider;
 
 		public bool drawable;
 
@@ -17,9 +18,10 @@ namespace Thomas
         {
 			this.ID = ID;
             components = new List<Component>();
+			collider = null;
+            
 			drawable = false;
         }
-
 
         public void Update(GameTime gameTime)
         {
@@ -30,6 +32,11 @@ namespace Thomas
                     c.Update(gameTime);
                 }
             }
+
+			if (collider != null)
+			{
+				collider.Update();
+			}
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -67,6 +74,11 @@ namespace Thomas
                     return c as T;
             return null;
         }
+
+		public void AddCollider(float x, float y, float width, float height)
+		{
+			collider = new Collider(this, (int)x, (int)y, (int)width, (int)height);
+		}
 
 		public int GetWidth()
 		{

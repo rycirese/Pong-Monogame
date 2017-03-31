@@ -53,6 +53,7 @@
     <None Include="Content\Sounds\ball_paddle.wav" />
     <None Include="Content\Sounds\ball_wall.wav" />
     <None Include="Content\Sounds\score.wav" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />

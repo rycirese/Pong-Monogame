@@ -39,7 +39,7 @@ namespace Thomas
 
             Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width);
             Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
-
+            
             entities = new List<Entity>();
         }
 
@@ -84,7 +84,7 @@ namespace Thomas
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+		
             if (entities != null)
             {
                 foreach (var e in entities)

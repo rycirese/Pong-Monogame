@@ -1,13 +1,50 @@
 ﻿using Microsoft.Xna.Framework;
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace Thomas
 {
-    class Collider
+    public class Collider
     {
-        
+		Entity entity;
+		public Rectangle rectangle;
+    
+		public Collider(Entity entity, float x, float y, float width, float height)
+		{
+			this.entity = entity;
+			rectangle = new Rectangle((int)x, (int)y, (int)width, (int)height);
+		}
+
+		public void Update()
+		{
+			rectangle.X = (int)entity.Get<PositionComponent>().position.X;
+			rectangle.Y = (int)entity.Get<PositionComponent>().position.Y;
+		}
+
+		public bool Collide(Collider a)
+		{
+			if (rectangle.Intersects(a.rectangle)) return true;
+			return false;
+		}
+
+		public int Left()
+		{
+			return rectangle.Left;
+		}
+		
+		public int Right()
+		{
+			return rectangle.Right;
+		}
+
+		public int Top()
+		{
+			return rectangle.Top;
+		}
+
+		public int Bottom()
+		{
+			return rectangle.Bottom;
+		}
     }
 }
