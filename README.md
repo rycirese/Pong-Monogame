@@ -1,6 +1,5 @@
-﻿#Pong 
+﻿# Pong 
 ====
-
 * Pong Clone - (Windows, Mac, Linus (Untested))
 * 2 Player 
 	* Player 1 Controls - Up, Down
@@ -8,7 +7,8 @@
 	* Reset Board - R
 	* Exit - Esc
 	
-##TODO
+## TODO
+====
 * Add angled deflection
 * Add score counter
 * Add play options
