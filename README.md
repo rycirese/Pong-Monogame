@@ -4,7 +4,7 @@
 * 2 Player 
 * Controls
 	* Player 1 Controls - Up, Down
-	* Player 2 Controls - WS
+	* Player 2 Controls - W, S
 	* Reset Board - R
 	* Exit - Esc
 	
