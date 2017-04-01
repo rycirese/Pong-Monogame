@@ -9,6 +9,6 @@
 	* Exit - Esc
 	
 ### TODO
-* Add angled deflection
+* Clean up current code
 * Add score counter
 * Add play options
