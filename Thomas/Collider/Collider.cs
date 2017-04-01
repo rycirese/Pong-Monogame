@@ -27,6 +27,16 @@ namespace Thomas
 			return false;
 		}
 
+		public int Width()
+		{
+			return rectangle.Width;
+		}
+		
+		public int Height()
+		{
+			return rectangle.Height;
+		}
+
 		public int Left()
 		{
 			return rectangle.Left;
@@ -45,6 +55,11 @@ namespace Thomas
 		public int Bottom()
 		{
 			return rectangle.Bottom;
+		}
+
+		public Point Center()
+		{
+			return rectangle.Center;
 		}
     }
 }

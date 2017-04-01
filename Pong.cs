@@ -21,13 +21,19 @@ namespace Pong
 		Entity player2;
 		Entity ball;
 
-		int dir;
+		float MAX_BOUNCE_ANGLE;
+		readonly float TIME_INTERVAL = 100f;
+		float timer;
+		bool collisionLocked;
+
 		float ballSpeed;
+		float ballVX;
+		float ballVY;
 
 		public Pong() : base(Strings.Title, 640, 360, false, false)
 		{
 			engine = this;
-			dir = new Random().Next(0, 2);
+			MAX_BOUNCE_ANGLE = (float)(60 * (Math.PI / 180));
 		}
 
 		protected override void Initialize()
@@ -43,6 +49,9 @@ namespace Pong
 			player1.AddComponent(player1PC);
 			player1.AddCollider(player1PC.origin.X, player1PC.origin.Y, player1DC.GetTextureWidth(), player1DC.GetTextureHeight());
 			engine.AddEntity(player1);
+			
+			Debug.WriteLine(player1.Get<DrawComponent>().GetTextureHeight());
+			Debug.WriteLine(player1.collider.Height());
 
 			player2 = new Entity("Player2");
 			DrawComponent player2DC = new DrawComponent(player2, "Sprites/paddle", Color.White, 0.0f, null, DrawLayer.Player());
@@ -62,8 +71,6 @@ namespace Pong
 			ball.AddComponent(ballPC);
 			ball.AddComponent(ballDC);
 			ball.AddCollider(ballPC.origin.X, ballPC.origin.Y, ballDC.GetTextureWidth(), ballDC.GetTextureHeight());
-			if (dir == 0) dir = -1;
-			else dir = 1;
 			engine.AddEntity(ball);
 
 			Entity centerLine = new Entity("centerLine");
@@ -87,36 +94,90 @@ namespace Pong
 			// http://gamedev.stackexchange.com/questions/4253/in-pong-how-do-you-calculate-the-balls-direction-when-it-bounces-off-the-paddl
 			//
 	
-			float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
 			if (Keyboard.GetState().IsKeyDown(Keys.R)) Reset();
 			
 			// PLAYER1 CONTROL
-			if (Keyboard.GetState().IsKeyDown(Keys.Up)) player1.Get<PositionComponent>().position.Y -= (deltaTime * 200f);
-			if (Keyboard.GetState().IsKeyDown(Keys.Down)) player1.Get<PositionComponent>().position.Y += (deltaTime * 200f);
+			if (Keyboard.GetState().IsKeyDown(Keys.Up)) player1.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
+			if (Keyboard.GetState().IsKeyDown(Keys.Down)) player1.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
 			
 			// PLAYER2 CONTROL
-			if (Keyboard.GetState().IsKeyDown(Keys.W)) player2.Get<PositionComponent>().position.Y -= (deltaTime * 200f);
-			if (Keyboard.GetState().IsKeyDown(Keys.S)) player2.Get<PositionComponent>().position.Y += (deltaTime * 200f);
-			
-			// Check if ball hits either paddle, top, bottom, or goes out of bounds
-			if (player1.collider.Collide(ball.collider)) dir = -1;
-			if (player2.collider.Collide(ball.collider)) dir = 1;
-			if (ball.collider.Right() >= engine.Width) Reset();
-			if (ball.collider.Left() <= 0f) Reset();
-			
-			ball.Get<PositionComponent>().position.X += (dir * (deltaTime * ballSpeed));
+			if (Keyboard.GetState().IsKeyDown(Keys.W)) player2.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
+			if (Keyboard.GetState().IsKeyDown(Keys.S)) player2.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
+
+			// BALL CONTROL
+			if (!collisionLocked) //Do not check collisions if temporarily locked to avoid multiple triggers
+			{
+				// Check paddle, top, bottom collision
+				if (player1.collider.Collide(ball.collider))
+				{
+					float intensity = (player1.collider.Center().Y - ball.collider.Center().Y) / (player1.collider.Height() / 2f);
+					ballVX = (float)-Math.Cos(intensity * MAX_BOUNCE_ANGLE);
+					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
+					collisionLocked = true;
+				}
+				if (player2.collider.Collide(ball.collider))
+				{
+					float intensity = (player2.collider.Center().Y - ball.collider.Center().Y) / (player2.collider.Height() / 2f);	
+					ballVX = (float)Math.Cos(intensity * MAX_BOUNCE_ANGLE);
+					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
+					collisionLocked = true;
+				}
+				if (ball.collider.Top() >= engine.Height)
+				{
+					ballVY *= -1;
+					collisionLocked = true;
+				}
+				if (ball.collider.Bottom() <= 0f)
+				{
+					ballVY *= -1;
+					collisionLocked = true;
+				}
+				
+				// Ball leaves screen
+				if (ball.collider.Right() >= engine.Width)
+				{
+					Reset();
+					collisionLocked = true;
+				}
+				if (ball.collider.Left() <= 0f)
+				{
+					Reset();
+					collisionLocked = true;
+				}
+			}
+			else //Unlock collisionLocked after TIME_INTERVAL Passes
+			{
+				timer += deltaTime;
+				if (timer >= TIME_INTERVAL)
+				{
+					timer -= TIME_INTERVAL;
+					collisionLocked = false;
+				}
+			}
+
+			ball.Get<PositionComponent>().position.X += (ballVX * (deltaTime * ballSpeed));
+			ball.Get<PositionComponent>().position.Y += (ballVY * (deltaTime * ballSpeed));	
 		}
 
 		public void Reset()
 		{
+			timer = 0;
+		
 			player1.Get<PositionComponent>().position.Y = player1.Get<PositionComponent>().origin.Y;
 			player2.Get<PositionComponent>().position.Y = player2.Get<PositionComponent>().origin.Y;
 			ball.Get<PositionComponent>().position.X = ball.Get<PositionComponent>().origin.X;
 			ball.Get<PositionComponent>().position.Y = ball.Get<PositionComponent>().origin.Y;
 			
-			ballSpeed = 250f;
+			ballSpeed = 0.25f;
+			ballVX = new Random().Next(0, 2);
+			if ((int)ballVX == 0) ballVX = -1;
+			else ballVX = 1;
+			ballVY = 0;
+			
+			collisionLocked = false;
 		}
 
 	}
