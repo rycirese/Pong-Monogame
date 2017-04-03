@@ -17,14 +17,14 @@ namespace Pong
 	{
 		Engine engine;
 
-        AudioManager audioManager = new AudioManager();
+        readonly AudioManager audioManager = new AudioManager();
 
 		Entity player1;
 		Entity player2;
 		Entity ball;
 
 		float MAX_BOUNCE_ANGLE;
-		readonly float TIME_INTERVAL = 100f;
+		readonly float TIME_INTERVAL = 50f;
 		float timer;
 		bool collisionLocked;
 
@@ -42,8 +42,6 @@ namespace Pong
 		{
 			base.Initialize();
 
-            audioManager = new AudioManager();
-
 			player1 = new Entity("Player1");
 			DrawComponent player1DC = new DrawComponent(player1, Content, "Sprites/paddle", Color.White);
 			PositionComponent player1PC = new PositionComponent(player1);
@@ -53,9 +51,6 @@ namespace Pong
 			player1.AddComponent(player1PC);
 			player1.AddCollider(player1PC.origin.X, player1PC.origin.Y, player1DC.GetTextureWidth(), player1DC.GetTextureHeight());
 			engine.AddEntity(player1);
-			
-			Debug.WriteLine(player1.Get<DrawComponent>().GetTextureHeight());
-			Debug.WriteLine(player1.collider.Height());
 
 			player2 = new Entity("Player2");
 			DrawComponent player2DC = new DrawComponent(player2, Content, "Sprites/paddle", Color.White);
@@ -86,8 +81,6 @@ namespace Pong
 			centerLine.AddComponent(centerLinePC);
 			engine.AddEntity(centerLine);
 
-            SoundEffect se = Content.Load<SoundEffect>("Sounds/ball_paddle");
-
 			Reset();
 		}
 
@@ -106,17 +99,29 @@ namespace Pong
 
 			if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
 			if (Keyboard.GetState().IsKeyDown(Keys.R)) Reset();
-			
-			// PLAYER1 CONTROL
-			if (Keyboard.GetState().IsKeyDown(Keys.Up)) player1.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
-			if (Keyboard.GetState().IsKeyDown(Keys.Down)) player1.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
-			
-			// PLAYER2 CONTROL
-			if (Keyboard.GetState().IsKeyDown(Keys.W)) player2.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
-			if (Keyboard.GetState().IsKeyDown(Keys.S)) player2.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
 
-			// BALL CONTROL
-			if (!collisionLocked) //Do not check collisions if temporarily locked to avoid multiple triggers
+            // PLAYER1 CONTROL
+            if (player1.collider.Top() > 0f)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Up)) player1.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
+            }
+            if(player1.collider.Bottom() < engine.Height)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Down)) player1.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
+            }
+
+            // PLAYER2 CONTROL
+            if (player2.collider.Top() > 0f)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.W)) player2.Get<PositionComponent>().position.Y -= (deltaTime * 0.2f);
+            }
+            if (player2.collider.Bottom() < engine.Height)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.S)) player2.Get<PositionComponent>().position.Y += (deltaTime * 0.2f);
+            }
+
+            // BALL CONTROL
+            if (!collisionLocked) //Do not check collisions if temporarily locked to avoid multiple triggers
 			{
 				// Check paddle, top, bottom collision
 				if (player1.collider.Collide(ball.collider))
@@ -139,7 +144,7 @@ namespace Pong
 					
 					collisionLocked = true;
 				}
-				if ((ball.collider.Top() >= engine.Height) || (ball.collider.Bottom() <= 0f))
+				if ( (ball.collider.Top() < 0f) || (ball.collider.Bottom() > engine.Height))
 				{
 					audioManager.PlaySoundEffect("wall");
 				
@@ -172,7 +177,12 @@ namespace Pong
 			ball.Get<PositionComponent>().position.Y += (ballVY * (deltaTime * ballSpeed));	
 		}
 
-		public void Reset()
+        protected override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+        }
+
+        public void Reset()
 		{
 			timer = 0;
 		

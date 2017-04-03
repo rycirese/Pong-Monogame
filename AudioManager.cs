@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 
+using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace Pong
@@ -22,10 +23,12 @@ namespace Pong
         }
 
         public void PlaySoundEffect(string name)
-        {
+        {            
             SoundEffect soundEffect;
-            soundEffects.TryGetValue(name, out soundEffect);
-            soundEffect.Play();
+            if (soundEffects.TryGetValue(name, out soundEffect))
+            {
+                soundEffect.Play();
+            }
         }
 
         public void UnloadContent()
