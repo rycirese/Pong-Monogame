@@ -9,6 +9,6 @@
 	* Exit - Esc
 	
 ### TODO
-* Clean up current code
-* Add score counter
-* Add play options
+* Code Cleanup
+* Add Score Counter
+* Create Menu Screen
