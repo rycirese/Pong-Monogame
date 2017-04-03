@@ -30,6 +30,7 @@ Thumbs.db
 
 # Windows stuff
 .vs/
+Setup/
 
 # Mac bundle stuff
 *.dmg
