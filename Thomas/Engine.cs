@@ -36,9 +36,6 @@ namespace Thomas
 
             if (borderless) Window.IsBorderless = true;
             else Window.IsBorderless = false;
-
-            Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width);
-            Debug.WriteLine(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             
             entities = new List<Entity>();
         }
@@ -51,11 +48,8 @@ namespace Thomas
         /// </summary>
         protected override void Initialize()
         {
-			// TODO: Add your initialization logic here
-			//ContentManagerUtil.Initialize(Content);
-			DrawUtil.Initialize(GraphicsDevice);
-
             base.Initialize();
+            DrawUtil.Initialize(GraphicsDevice);
         }
 
         /// <summary>
@@ -101,6 +95,7 @@ namespace Thomas
         protected override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+
             GraphicsDevice.Clear(Color.Black);
             
 			DrawUtil.SpriteBatch.Begin(SpriteSortMode.BackToFront);

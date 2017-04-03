@@ -50,6 +50,10 @@ namespace Thomas
             }
         }
 
+        /// <summary>
+        /// Add a component to 'components'
+        /// </summary>
+        /// <param name="component"></param>
         public void AddComponent(Component component)
         {
             if (!components.Contains(component))
@@ -59,6 +63,10 @@ namespace Thomas
             }
         }
 
+        /// <summary>
+        /// Remove component from 'components'
+        /// </summary>
+        /// <param name="component"></param>
         public void RemoveComponent(Component component)
         {
             if (components.Contains(component))
@@ -67,6 +75,12 @@ namespace Thomas
             }
         }
 
+        /// <summary>
+        /// Return Component of type T from 'components'
+        /// or null if it doesn't exist
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Get<T>() where T : Component
         {
             foreach (var c in components)
@@ -75,11 +89,22 @@ namespace Thomas
             return null;
         }
 
+        /// <summary>
+        /// Creates a Collider and attaches it
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
 		public void AddCollider(float x, float y, float width, float height)
 		{
 			collider = new Collider(this, (int)x, (int)y, (int)width, (int)height);
 		}
 
+        /// <summary>
+        /// Returns width value of texture
+        /// </summary>
+        /// <returns></returns>
 		public int GetWidth()
 		{
 			if (drawable)
@@ -90,6 +115,10 @@ namespace Thomas
 			return 0;
 		}
 
+        /// <summary>
+        /// Returns height valvue of texture
+        /// </summary>
+        /// <returns></returns>
 		public int GetHeight()
 		{
 			if (drawable)

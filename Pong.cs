@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 using System;
@@ -23,19 +21,18 @@ namespace Pong
 		Entity player2;
 		Entity ball;
 
-		float MAX_BOUNCE_ANGLE;
 		readonly float TIME_INTERVAL = 50f;
 		float timer;
 		bool collisionLocked;
 
-		float ballSpeed;
+        readonly float MAX_BOUNCE_ANGLE = MathHelper.ToRadians(60f);
+        float ballSpeed;
 		float ballVX;
 		float ballVY;
 
 		public Pong() : base(Strings.Title, 640, 360, false, false)
 		{
 			engine = this;
-			MAX_BOUNCE_ANGLE = (float)(60 * (Math.PI / 180));
 		}
 
 		protected override void Initialize()
@@ -121,49 +118,49 @@ namespace Pong
             }
 
             // BALL CONTROL
-            if (!collisionLocked) //Do not check collisions if temporarily locked to avoid multiple triggers
+            if (!collisionLocked) // Do not check collisions if collision gate is locked to avoid multiple triggers
 			{
-				// Check paddle, top, bottom collision
+				// Check if ball hit either paddle
 				if (player1.collider.Collide(ball.collider))
 				{
 					audioManager.PlaySoundEffect("paddle");
-				
-					float intensity = (player1.collider.Center().Y - ball.collider.Center().Y) / ((player1.collider.Height() + ball.collider.Height()) / 2f);
+				 
+                    // Calculate the difference the center of the ball is from the center of the paddle and divide
+                    // by the half of the sum of thier heights. This will yield a decimal number from -1 to 1. 
+                    // NOTE: Added 1 to ball.collider.cebter.Y to compensate for bad rounding
+					float intensity = (player1.collider.Center().Y - (ball.collider.Center().Y + 1)) / ((player1.collider.Height() + ball.collider.Height()) / 2f);
 					ballVX = (float)-Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
 					
+                    // Lock collision gate
 					collisionLocked = true;
 				}
 				if (player2.collider.Collide(ball.collider))
 				{
 					audioManager.PlaySoundEffect("paddle");
-
-					float intensity = (player2.collider.Center().Y - ball.collider.Center().Y) / ((player2.collider.Height() + ball.collider.Height()) / 2f);	
+					float intensity = (player2.collider.Center().Y - (ball.collider.Center().Y + 1)) / ((player2.collider.Height() + ball.collider.Height()) / 2f);	
 					ballVX = (float)Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
-					
 					collisionLocked = true;
 				}
+
+                // Check if ball hit walls
 				if ( (ball.collider.Top() < 0f) || (ball.collider.Bottom() > engine.Height))
 				{
 					audioManager.PlaySoundEffect("wall");
-				
 					ballVY *= -1;
-					
 					collisionLocked = true;
 				}
 				
-				// Ball leaves screen
+				// Check if ball is in play, if it is not, reset
 				if ((ball.collider.Right() >= engine.Width) || (ball.collider.Left() <= 0f))
 				{
 					audioManager.PlaySoundEffect("score");
-				
 					Reset();
-					
 					collisionLocked = true;
 				}
 			}
-			else //Unlock collisionLocked after TIME_INTERVAL Passes
+			else //Unlock collision gate after TIME_INTERVAL Passes
 			{
 				timer += deltaTime;
 				if (timer >= TIME_INTERVAL)
@@ -173,15 +170,14 @@ namespace Pong
 				}
 			}
 
+            // Update the position of the ball with calculate angles
 			ball.Get<PositionComponent>().position.X += (ballVX * (deltaTime * ballSpeed));
 			ball.Get<PositionComponent>().position.Y += (ballVY * (deltaTime * ballSpeed));	
 		}
 
-        protected override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
-
+        /// <summary>
+        /// Sets the game board at start of game and after a score
+        /// </summary>
         public void Reset()
 		{
 			timer = 0;

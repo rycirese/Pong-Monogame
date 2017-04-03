@@ -1,10 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong", "Pong.csproj", "{F39DDEF3-2FDD-4E69-8131-76CB73566783}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Thomas", "Thomas\Thomas.shproj", "{85673F3B-7329-40F2-A002-CC80818F849D}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{21121B37-BC5A-4E0D-850E-D1251B85DFF8}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -20,6 +22,8 @@ Global
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Debug|x86.Build.0 = Debug|x86
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Release|x86.ActiveCfg = Release|x86
 		{F39DDEF3-2FDD-4E69-8131-76CB73566783}.Release|x86.Build.0 = Release|x86
+		{21121B37-BC5A-4E0D-850E-D1251B85DFF8}.Debug|x86.ActiveCfg = Debug
+		{21121B37-BC5A-4E0D-850E-D1251B85DFF8}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

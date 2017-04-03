@@ -19,7 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\DrawUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\DrawComponent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\ContentManagerUtil.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\PositionComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Component\VelocityComponent.cs" />
   </ItemGroup>
