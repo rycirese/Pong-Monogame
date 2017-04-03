@@ -17,6 +17,8 @@ namespace Pong
 	{
 		Engine engine;
 
+        AudioManager audioManager = new AudioManager();
+
 		Entity player1;
 		Entity player2;
 		Entity ball;
@@ -40,8 +42,10 @@ namespace Pong
 		{
 			base.Initialize();
 
+            audioManager = new AudioManager();
+
 			player1 = new Entity("Player1");
-			DrawComponent player1DC = new DrawComponent(player1, "Sprites/paddle", Color.White, 0.0f, null, DrawLayer.Player());
+			DrawComponent player1DC = new DrawComponent(player1, Content, "Sprites/paddle", Color.White);
 			PositionComponent player1PC = new PositionComponent(player1);
 			player1PC.position.X = player1PC.origin.X = engine.Width - (player1DC.GetTextureWidth() + 20f);
 			player1PC.position.Y = player1PC.origin.Y = (engine.Height / 2f) - (player1DC.GetTextureHeight() / 2f);
@@ -54,7 +58,7 @@ namespace Pong
 			Debug.WriteLine(player1.collider.Height());
 
 			player2 = new Entity("Player2");
-			DrawComponent player2DC = new DrawComponent(player2, "Sprites/paddle", Color.White, 0.0f, null, DrawLayer.Player());
+			DrawComponent player2DC = new DrawComponent(player2, Content, "Sprites/paddle", Color.White);
 			PositionComponent player2PC = new PositionComponent(player2);
 			player2PC.position.X = player2PC.origin.X = 20f;
 			player2PC.position.Y = player2PC.origin.Y = (engine.Height / 2f) - (player2DC.GetTextureHeight() / 2f);
@@ -64,7 +68,7 @@ namespace Pong
 			engine.AddEntity(player2);
 
 			ball = new Entity("Ball");
-			DrawComponent ballDC = new DrawComponent(ball, "Sprites/ball", Color.White, 0.0f, null, DrawLayer.Front());
+			DrawComponent ballDC = new DrawComponent(ball, Content, "Sprites/ball", Color.White);
 			PositionComponent ballPC = new PositionComponent(ball);
 			ballPC.position.X = ballPC.origin.X = (engine.Width / 2f) - (ballDC.GetTextureWidth() / 2f);
 			ballPC.position.Y = ballPC.origin.Y = (engine.Height / 2f) - (ballDC.GetTextureHeight() / 2f);
@@ -74,7 +78,7 @@ namespace Pong
 			engine.AddEntity(ball);
 
 			Entity centerLine = new Entity("centerLine");
-			DrawComponent centerLineDC = new DrawComponent(centerLine, "Sprites/center", Color.White, 0.0f, null, DrawLayer.Background());
+			DrawComponent centerLineDC = new DrawComponent(centerLine, Content, "Sprites/center", Color.White);
 			PositionComponent centerLinePC = new PositionComponent(centerLine);
 			centerLinePC.position.X = (engine.Width / 2f) - (centerLineDC.GetTextureWidth() / 2f);
 			centerLinePC.position.Y = 7f;
@@ -82,17 +86,21 @@ namespace Pong
 			centerLine.AddComponent(centerLinePC);
 			engine.AddEntity(centerLine);
 
+            SoundEffect se = Content.Load<SoundEffect>("Sounds/ball_paddle");
+
 			Reset();
 		}
 
-		protected override void Update(GameTime gameTime)
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+
+            audioManager.LoadContent(Content);
+        }
+
+        protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
-			
-			//
-			// REFERENCE:
-			// http://gamedev.stackexchange.com/questions/4253/in-pong-how-do-you-calculate-the-balls-direction-when-it-bounces-off-the-paddl
-			//
 	
 			float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
@@ -113,36 +121,26 @@ namespace Pong
 				// Check paddle, top, bottom collision
 				if (player1.collider.Collide(ball.collider))
 				{
-					float intensity = (player1.collider.Center().Y - ball.collider.Center().Y) / (player1.collider.Height() / 2f);
+					float intensity = (player1.collider.Center().Y - ball.collider.Center().Y) / ((player1.collider.Height() + ball.collider.Height()) / 2f);
 					ballVX = (float)-Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
 					collisionLocked = true;
 				}
 				if (player2.collider.Collide(ball.collider))
 				{
-					float intensity = (player2.collider.Center().Y - ball.collider.Center().Y) / (player2.collider.Height() / 2f);	
+					float intensity = (player2.collider.Center().Y - ball.collider.Center().Y) / ((player2.collider.Height() + ball.collider.Height()) / 2f);	
 					ballVX = (float)Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
 					collisionLocked = true;
 				}
-				if (ball.collider.Top() >= engine.Height)
-				{
-					ballVY *= -1;
-					collisionLocked = true;
-				}
-				if (ball.collider.Bottom() <= 0f)
+				if ((ball.collider.Top() >= engine.Height) || (ball.collider.Bottom() <= 0f))
 				{
 					ballVY *= -1;
 					collisionLocked = true;
 				}
 				
 				// Ball leaves screen
-				if (ball.collider.Right() >= engine.Width)
-				{
-					Reset();
-					collisionLocked = true;
-				}
-				if (ball.collider.Left() <= 0f)
+				if ((ball.collider.Right() >= engine.Width) || (ball.collider.Left() <= 0f))
 				{
 					Reset();
 					collisionLocked = true;

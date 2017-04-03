@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 using System;
@@ -9,19 +10,13 @@ namespace Thomas
 	{
         private Texture2D texture;
         private Color color;
-        private float rotation;
-        private Vector2? scale;
-        private float layerDepth;
 
-        public DrawComponent(Entity entity, string texture, Color color, float rotation, Vector2? scale, float layerDepth) : base("DrawComponent")
+        public DrawComponent(Entity entity, ContentManager Content, string texture, Color color) : base("DrawComponent")
 		{
 			this.entity = entity;
 
-			this.texture = ContentManagerUtil.Content.Load<Texture2D>(texture);
+			this.texture = Content.Load<Texture2D>(texture);
             this.color = color;
-            this.rotation = rotation;
-            this.scale = scale;
-            this.layerDepth = layerDepth;
         }
 
 		public override void Draw(SpriteBatch spriteBatch)

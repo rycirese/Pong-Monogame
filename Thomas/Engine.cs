@@ -52,7 +52,7 @@ namespace Thomas
         protected override void Initialize()
         {
 			// TODO: Add your initialization logic here
-			ContentManagerUtil.Initialize(Content);
+			//ContentManagerUtil.Initialize(Content);
 			DrawUtil.Initialize(GraphicsDevice);
 
             base.Initialize();
