@@ -121,28 +121,40 @@ namespace Pong
 				// Check paddle, top, bottom collision
 				if (player1.collider.Collide(ball.collider))
 				{
+					audioManager.PlaySoundEffect("paddle");
+				
 					float intensity = (player1.collider.Center().Y - ball.collider.Center().Y) / ((player1.collider.Height() + ball.collider.Height()) / 2f);
 					ballVX = (float)-Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
+					
 					collisionLocked = true;
 				}
 				if (player2.collider.Collide(ball.collider))
 				{
+					audioManager.PlaySoundEffect("paddle");
+
 					float intensity = (player2.collider.Center().Y - ball.collider.Center().Y) / ((player2.collider.Height() + ball.collider.Height()) / 2f);	
 					ballVX = (float)Math.Cos(intensity * MAX_BOUNCE_ANGLE);
 					ballVY = (float)-Math.Sin(intensity * MAX_BOUNCE_ANGLE);
+					
 					collisionLocked = true;
 				}
 				if ((ball.collider.Top() >= engine.Height) || (ball.collider.Bottom() <= 0f))
 				{
+					audioManager.PlaySoundEffect("wall");
+				
 					ballVY *= -1;
+					
 					collisionLocked = true;
 				}
 				
 				// Ball leaves screen
 				if ((ball.collider.Right() >= engine.Width) || (ball.collider.Left() <= 0f))
 				{
+					audioManager.PlaySoundEffect("score");
+				
 					Reset();
+					
 					collisionLocked = true;
 				}
 			}
